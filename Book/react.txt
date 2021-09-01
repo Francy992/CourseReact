@@ -1,0 +1,224 @@
+Trick utili:
+	Estensione ES7 React/Redux/GraphQL/React-Native snippets
+	Estensione chrome "React Developer Tools"
+
+Per creare la struttura dell'app react:
+	npm install npx
+	npm install CREATE-REACT-APP
+	npx CREATE-REACT-APP nome_app
+
+Best Practies di un progetto react:
+	Cartelle:
+		Components
+		CSS
+		Tests
+		Common (contenuti comuni)
+		Utils
+	Le cartelle "Components e CSS" conterranno N sottocartelle quanti sono i componenti creati all'interno del progetto.
+	
+
+Javascript:
+	- let: variabile si può riassegnare, scope ristretto al contesto e non globale
+	- var: scope globale.
+	- const: come let, ma non è possibile riassegnarla. Nello specifico, se a const assegno un oggetto, non posso cambiare il riferimento a quell'oggetto ma posso mutare i valori interni dell'oggetto.
+	- ``: con questi simboli che si creano con "alt+096" possiamo mischiare codice e stringa. Per usarli insieme un esempio: "Hello Francesco ${qui il codice}".
+	- Destructuring array: 
+		const list = [1,2,3,4,5];
+		const [a,b,...c] = list; // Ad a e b saranno assegnati 1 e 2. A c saranno assegnati i valori rimanenti
+	- Destructuring obj: 
+		const user = {name: 'Tizio', lastName: 'Caio'};
+		const {name, lastName = 'defaultValue'} = user; // name e LastName prendono i valori all'interno dell'oggetto user. Il defaultValue interviene solamente se user.lastName è undefined.
+		In caso di oggetti nidificati, posso scrivere in questo modo: const {obj1: {obj2:{test, test1}}}};
+	- Spread operator: operatore "..." serve ad effettuare l'unione di due array al volo oppure la clonazione di uno.
+		let data = [1,2,3,4];
+		let list = [5,6,7,8];
+		const res = [...data,...list];
+	  Funziona allo stesso modo con gli oggetti. 
+	  Da notare che crea una vera copia e non al puntatore dell'oggetto originale.
+	  Per far puntare il nuovo oggetto al puntatore del vecchio oggetto è possibile utilizzare Object.assign():
+		const user = {name: 'Tizio', lastName: 'Caio'};
+		const copy = Object.assign(user); // copy punta allo stesso indirizzo di user.
+		const copy = Object.assign({}, user); // copy punta ad un nuovo indirizzo, è stata fatta una copia.
+		const copy = {...user}; // effettua una copia di user. Si possono eventualmente concatenare vari vari oggetti proprio come con gli array.
+	- Arrow function: si possono creare funzioni al volo con =>.
+	- Array Map: ci consente di creare una nuova collezione di dati a partire da una esistente, ad esempio, manipolandola.
+		const users = [
+		  {"id": 1, "name": "Ciao1"},
+		  {"id": 2, "name": "Ciao2"},
+		  {"id": 3, "name": "Ciao3"},
+		];
+		const newList = users.map((user, index) => {
+		  console.log("Ciclo " + user);
+		  return `Elemento ${index}: ${user.name}`;
+		});
+		console.log(newList);
+	- Array filter: filtra un array/oggetto andandone a creare uno nuovo. La funzione in questo caso dovrà essere una booleana in quanto dovrà decidere se includere o escludere l'elemento corrente dal nuovo array.
+		const users = [
+		  {"id": 1, "name": "Ciao1"},
+		  {"id": 2, "name": "Ciao2"},
+		  {"id": 3, "name": "Ciao3"},
+		];
+		const newList = users.filter((user) => user.id%2 == 1);
+		console.log(newList);
+	- Array findIndex/find: trova un elemento e si ferma quando trovato.
+		const users = [
+		  {"id": 1, "name": "Ciao1"},
+		  {"id": 2, "name": "Ciao2"},
+		  {"id": 3, "name": "Ciao3"},
+		];
+		const index = users.findIndex((user) => user.id === 3);
+		console.log(index);
+		
+		find invece ci restituisce direttamente l'elemento trovato.
+	- Classi:
+		class Prova{
+			prop1 = "Sono una proprietà";
+			constructor(){
+				console.log("TestConstructor");
+			}
+			
+			hello(val){
+				console.log(`Ciao ${val}`):
+				console.log(`Sono la proprietà ${this.prop1}`):
+			}
+		}
+		
+		const p = new Prova();
+		p.hello("Francesco");
+
+		//E' anche possibile estendere una classe:
+		class ProvaExtended extends Prova{
+		
+		}
+	- WebPack: trasforma il codice di sviluppo in codice adatto alla produzione. Da seguire la documentazione, possibilità di provarlo con aromidisiciliadiromano.it.
+		npm install webpack -d
+		npm install webpack-cli -d
+	
+	
+	- React:
+		- Un componente non dovrebbe mai modificare una props che gli viene passata.
+		- Le props passate sono accessibili dal componente figlio con la property "this.props.nomeproprietàpassata" nel caso si tratti di una classe, "props.nome" nel caso invece si tratti di un componente const.
+		Esempi:
+			class Children extends Component {
+				render() {
+					return (
+						<div>
+							<h1>Children --> {this.props.prop}</h1>
+						</div>
+					)
+				}
+			}
+
+			const Children = (props) => {
+				return (
+					<div>
+						<h1>Children --> {props.prop}</h1>
+					</div>
+				)
+			}
+		- Se si vogliono passare numeri e non stringhe nel componente padre passarli come "{}".
+		- Nel momento in cui si chiama uno setState viene renderizzato nuovamente il componente.
+		- Per far dialogare il componente figlio con il padre 
+		- Index.css continee il css globale dell'applicazione. Per ogni componente è usanza creare un file css per ogni componente.
+		- Il css inline in react non si scrive come di consueto ma in questo modo:
+			style={{fontSize:'24px', color:'red'}}
+		- Il tag "class" è sostituito da "className"
+		- Nel caso in cui si voglia usare un parametro all'interno di un'espressione tipo setState la sintassi è la seguente:
+			onChangeCk = (e) => {
+				console.log(e.target.value);
+				this.setState({ [e.target.name]: e.target.checked })
+			}
+		
+		- Ciclo di vita di un componente:
+			- Mount: In questa fase vengono in ordine invocati:
+				- constructor()
+				- getDerivedStateFromProps(p,s): abilita il componente ad aggiornare il proprio stato interno in funzione del cambiamento di una proprietà che è stata modificata nel componente genitore.
+				- render(): costruisce l'albero di componenti che poi viene iniettato nel dom.
+				- componentDidMount(): gestisce spesso i dati che provengono da fonti esterne.
+				
+			- Update: 
+				- getDerivedStateFromProps(p,s)
+				- shouldComponentUpdate(): è possibile decidere se il dom deve essere aggiornato o meno.
+				- render()
+				- getSnapShotBeforeUpdate(p,s): salva un'istantanea del dom pre aggiornamento.
+				- componentDidUpdate(pProps, pState, snap): da approfondire eventualmemnte.
+			- UnMount:
+				- componentDidUnMount
+			- Esempio di classe con routing:				
+				export class template extends Component {
+					render() {
+						return (
+							<div>
+								<header/>
+								{this.props.children}
+								<footer/>
+							</div>
+						)
+					}
+				}
+				Gli import necessari al funzionamento sono i seguenti in App.js: 
+					import {BrowserRouter, Route, Switch} from 'react-router-dom'
+				E il codice da utilizzare:
+					    <BrowserRouter>
+						  <Template>
+							<Switch>
+							  <Route exact path='/' component={Home}/>
+							</Switch>
+						  </Template>
+						</BrowserRouter> 
+				In pratica dentro Switch si inserisce ciò che si deve visualizzare. In pratica Switch và a caricare dinamicamente il componente richiesto all'interno di this.props.children nel Template component.
+
+			
+			
+			In generale top down: quindi render padre, render figlio, didMount figlio, didMount Padre.
+			- Dipendenze utili:
+				- react-router-dom --> abilita il routing.
+	
+		- Per formattare il codice in visual studio: alt + shift + f
+		- Per spostarsi tra le pagine o fare un redirect:         this.props.history.push('/booklist');
+		- Se al posto delle classi si vogliono usare dei componenti "const" si può comunque utilizzare lo stato andando ad importare "useState" from react e utilizzando la seguente sintassi: 
+			const [newHero, setNewHero] = useState(); NB: Per inizializzare basta passare un valore a useState(valore);
+		  const handleHeroChange = e => {
+			console.log(e.target.value);
+			setNewHero(e.target.value);
+		  } 
+		 Si possono leggere invece normalmente in quanto all'interno del componente vi è visione "globale". 
+	
+		- JsonServer per avere dei Mock on the fly su file json. Inoltre è possibile installare concurrently per lanciare al volo il tutto (il secondo serve per far gestire ad un terminare due comandi. Approfondire anche le modifiche al package.json).
+			- Per utilizzare il tutto: creare una cartella "server" con all'interno un file db.json. 
+	
+		- Se vogliamo passare un valore ad una funzione richiamata dobbiamo usare l'array function: 
+			const rows = heroesToShow.map(heroe =>
+				<Hero key={heroe.id} hero={heroe} toggleImportant={() => toggleImportance(heroe.id)}></Hero>
+			  )
+	
+		- REDUX: gestore di stato utilizzabile con react.
+			
+	
+	
+	
+		- Utils generiche:
+			- Indentazione automatica html/css/qualunque linguaggio? in visual studio code: ctrl + maiusc + F
+			- Sito per il download di immagini: https://pixabay.com/it/
+			- axios (o rxjs?) per la gestione delle call api.
+			- Simple react snippets:
+				- import veloce: imr
+				- Snippet di codice per la funzione: sfc
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

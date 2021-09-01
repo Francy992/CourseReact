@@ -1,0 +1,25 @@
+.fixedContainer {
+  background-color: white;
+  position: fixed;
+  padding: 0em;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5%;
+}
+
+.box {
+  width: 400px;
+  height: 450px;
+}
+
+.body {
+  width: 100%;
+  height: 100%;
+  background-color: #FE908C;
+}
+
+.boxtodo{
+  height: 300px;
+  overflow-y: scroll;
+}

@@ -1,0 +1,15 @@
+.stock {
+    width: 700px;
+    background-color: #000;
+    margin-bottom: 10px;
+    padding:12px;
+}
+
+.col {
+    width: 25%;
+    float: left;
+}
+
+.col p {
+    color: #CCC;
+}
