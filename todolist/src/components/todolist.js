@@ -1,29 +1,19 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Todo from './todo';
+import {useStoreState } from './../../node_modules/easy-peasy';
 
-class todolist extends Component {
-    constructor(props) {
-        super(props);
-    }
+const Todolist = () => {
 
-    updateTodo = (todoIdx) => {
-        this.props.updateTodo(todoIdx);
-    }
-
-    deleteTodo = (todoIdx) => {
-        this.props.deleteTodo(todoIdx);
-    }
-
-    render() {
-        return (
-            <div className="boxtodo">
-                {this.props.listOfTodo.map((el, index) => {
-                    return <Todo data={el} idx={index} key={index} updateTodo={this.updateTodo} deleteTodo={this.deleteTodo}/>
-                    }
-                )}
-            </div>
-        )
-    }
+    const todolists = useStoreState(state => state.todolists);
+    
+    return (
+        <div className="boxtodo">
+            {todolists.map((el, index) => {
+                return <Todo data={el} idx={index} key={index}/>
+                }
+            )}
+        </div>
+    )
 }
 
-export default todolist
+export default Todolist

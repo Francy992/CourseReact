@@ -1,36 +1,42 @@
-import React, { Component } from 'react'
+import React from 'react'
+import {useStoreActions } from './../../node_modules/easy-peasy';
 
-class todo extends Component {
-    constructor(props) {
-        super(props);
+const Todo = (data) => {
+
+    const updateTodoState =  useStoreActions(actions => actions.updateTodo);
+    const deleteTodoState =  useStoreActions(actions => actions.deleteTodo);
+
+    const updateTodo = () => {
+        updateTodoState(data.idx);
     }
 
-    render() {
-        return (
-            <div className="row m-2">
-                <div className="col-12">
-                    <div className="row">
-                        <div className="col-9">
-                            <div className="input-group mb-3">
-                                <div className="input-group-prepend">
-                                    <div className="input-group-text" style={{backgroundColor: "white", border: "0px"}}>
-                                        <input type="checkbox" checked={this.props.data.compleated} onChange={() => this.props.updateTodo(this.props.idx)} />
-                                    </div>
+    const deleteTodo = () => {
+        deleteTodoState(data.idx);
+    }
+
+    return (
+        <div className="row m-2">
+            <div className="col-12">
+                <div className="row">
+                    <div className="col-9">
+                        <div className="input-group mb-3">
+                            <div className="input-group-prepend">
+                                <div className="input-group-text" style={{backgroundColor: "white", border: "0px"}}>
+                                    <input type="checkbox" checked={data.data.compleated} onChange={updateTodo} />
                                 </div>
-                                {this.props.data.name}
                             </div>
+                            {data.data.name}
                         </div>
-                        <div className="col-3 text-center">
-                        {this.props.data.compleated ? 
-                            <button className="btn btn-outline-secondary bigRadius" onClick={() => this.props.deleteTodo(this.props.idx)}>Delete</button> : ""}                     
-                        </div>
-                        <hr />
                     </div>
+                    <div className="col-3 text-center">
+                    {data.data.compleated ? 
+                        <button className="btn btn-outline-secondary bigRadius" onClick={deleteTodo}>Delete</button> : ""}                     
+                    </div>
+                    <hr />
                 </div>
             </div>
-
-        )
-    }
+        </div>
+    )
 }
 
-export default todo
+export default Todo
