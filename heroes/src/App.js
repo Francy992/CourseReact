@@ -83,4 +83,47 @@ const App = () => {
   );
 }
 
+
+// https://www.sung.codes/blog/2018/setting-react-hooks-states-in-a-sync-like-manner
+// function useAsyncState(initialValue) {
+//   const [value, setValue] = useState(initialValue);
+//   const setter = x =>
+//     new Promise(resolve => {
+//       setValue(x);
+//       resolve(x);
+//     });
+//   return [value, setter];
+// }
+
+
+// function App() {
+//   const [count, setCount] = useAsyncState(0);
+//   const [message, setMessage] = useAsyncState("");
+
+//   async function increment() {
+//     const res = await setCount(count + 1);
+//     console.log("res", res);
+//     setMessage(`count is ${res}`);
+//   }
+
+//   function decrement() {
+//     setCount(count - 1);
+//     setMessage(`count is ${count}`);
+//   }
+
+//   return (
+//     <div className="App">
+//       <h1>Update Count!</h1>
+//       <p>Count: {count}</p>
+//       <p>{message}</p>
+//       <button type="button" onClick={increment}>
+//         +
+//       </button>
+//       <button type="button" onClick={decrement}>
+//         -
+//       </button>
+//     </div>
+//   );
+// }
+
 export default App;

@@ -206,6 +206,9 @@ Javascript:
 				- Snippet di codice per la funzione: sfc
 	
 	
+		- Note varie da progetto Tailoor:
+			- UseMutation si utilizza per create/update/delete. UseQuery si utilizza per le get. Query viene eseguita in parallelo, mentre la mutation viene eseguita in modo seriale.
+	
 	
 	
 	
